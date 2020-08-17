@@ -29,6 +29,8 @@ class Tweet(DB.Model):
 def insert_example_users():
     austen = User(id=1, name='austen')
     elon = User(id=2, name='elonmusk')
+    trevor = User(id=3, name='TrevorJames', text='I am Better')
     DB.session.add(austen)
     DB.session.add(elon)
+    DB.session.add(trevor)
     DB.session.commit()
