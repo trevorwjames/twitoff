@@ -3,7 +3,7 @@ Main app/routing file for TwitOff
 """
 
 from flask import Flask, render_template
-from .models import DB, User, insert_example_users
+from .models import DB, User, insert_example_users, insert_example_tweets
 
 
 def create_app():
@@ -24,6 +24,7 @@ def create_app():
         DB.drop_all()
         DB.create_all()
         insert_example_users()
+        insert_example_tweets()
         return render_template('base.html', title='Users Updated!', users=User.query.all())
 
     return app

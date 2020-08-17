@@ -34,3 +34,13 @@ def insert_example_users():
     DB.session.add(elon)
     DB.session.add(trevor)
     DB.session.commit()
+
+
+def insert_example_tweets():
+    t1 = Tweet(id=1, text='Lambda School is awesome')
+    t2 = Tweet(id=2, text='Tesla is so much Betta!')
+    t3 = Tweet(id=3, text='No But I am Data Scientist')
+    DB.session.add(t1)
+    DB.session.add(t2)
+    DB.session.add(t3)
+    DB.session.commit()
