@@ -1,2 +1,2 @@
 # twitoff
-Twitter API comparing two users and a regression btw them
+Twitter API comparing two users using a regression model and Basilica
