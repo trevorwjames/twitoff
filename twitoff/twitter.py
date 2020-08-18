@@ -19,7 +19,7 @@ BASILICA = basilica.Connection(getenv('BASILICA_KEY'))
 
 
 def add_or_update_user(username):
-    """add or update a user and their tweerts, error if not a twitter user."""
+    """add or update a user and their tweets, error if not a twitter user."""
     try:
         twitter_user = TWITTER.get_user(username)
         db_user = (User.query.get(twitter_user.id) or
@@ -42,6 +42,7 @@ def add_or_update_user(username):
         raise e
     else:
         DB.session.commit()
+
 
 def insert_example_user():
     """example user data"""
