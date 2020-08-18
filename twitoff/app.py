@@ -1,10 +1,9 @@
 """
 Main app/routing file for TwitOff
 """
-
 from flask import Flask, render_template
-from .models import DB, User
-from .twitter import insert_example_user
+from twitoff.models import DB, User
+from twitoff.twitter import insert_example_user
 
 
 def create_app():
@@ -30,5 +29,12 @@ def create_app():
         DB.drop_all()
         DB.create_all()
         return render_template('base.html', title='Reset database')
+
+    @app.route('/trevor')
+    def trevor():
+        hi = 'Hello Human, I am Trevor THE creator of TwitOff, well at least this version of twitoff...' \
+             'designed by Lambda School, with a walkthrough by Aaron Gallant, and with lots of help from ' \
+             'my TL Broken, and all my fellow students...'
+        return hi
 
     return app

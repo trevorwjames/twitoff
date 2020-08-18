@@ -27,10 +27,3 @@ class Tweet(DB.Model):
 
     def __repr__(self):
         return '-Tweet {}-'.format(self.text)
-
-
-
-
-
-
-    DB.session.commit()

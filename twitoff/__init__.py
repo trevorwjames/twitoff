@@ -1,7 +1,1 @@
-"""
-Entry Point for TwitOff
-"""
-
-from .app import create_app
-
-APP = create_app()
+"""Twitoff - Sentiment analysis of twitter user feeds."""
