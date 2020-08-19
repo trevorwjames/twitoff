@@ -1,9 +1,9 @@
 """
 Main app/routing file for TwitOff
 """
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from twitoff.models import DB, User
-from twitoff.twitter import insert_example_user
+from twitoff.twitter import insert_example_user, add_or_update_user
 
 
 def create_app():
@@ -13,10 +13,37 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     DB.init_app(app)
 
-    # ...TODO make the app!
+
     @app.route('/')
     def root():
         return render_template('base.html', title='Home', users=User.query.all())
+
+    @app.route('/user', methods=['POST'])
+    @app.route('/user/<name>', methods=['GET'])
+    def user(name=None, message=''):
+        name = name or request.values['user_name']
+        try:
+            if request.method == 'POST':
+                add_or_update_user(name)
+                message = f'User {name} successfully added!'
+            tweets = User.query.filter(User.name == name).one().tweets
+        except Exception as e:
+            message = f"Error adding {name}: {e}"
+            tweets = []
+        return render_template('user.html', title=name, tweets=tweets, message=message)
+
+    @app.route('/compare', methods=['POST'])
+    def compare():
+        user1, user2 = sorted([request.values['user1'],
+                               request.values['user2']])
+        if user1 == user2:
+            message = 'Must compare 2 different twitter users'
+        else:
+            prediction = predict_user(user1, user1, request.values['tweet_text'])
+            message = '"{}" is more likely to be said by {} than {}'.format(request.values['tweet_text'],
+                                                                            user1 if prediction[0] else user2,
+                                                                            user2 if prediction[0] else user1)
+        return render_template('prediciton.html', title='Prediction', message=message)
 
     @app.route('/update')
     def update():
